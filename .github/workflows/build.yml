@@ -57,4 +57,4 @@ jobs:
       - name: Create app with route
         run: |
           oc new-app landing-page --namespace=${{ secrets.OPENSHIFT_NAMESPACE }} --name=landing-page-dev
-          oc expose svc/landing-page-dev --name=elixir
+          oc create route edge elixir --hostname=elixir-landing-page-dev.2.rahtiapp.fi --service=landing-page-dev --insecure-policy='Redirect' --port=3000
