@@ -1,8 +1,6 @@
 name: Build and Publish app
 
-on:
-  push:
-    branches: dev
+on: workflow_dispatch
 
 jobs:
   build:
@@ -50,9 +48,9 @@ jobs:
       - name: Pull from Docker registry
         run: docker pull ${{ secrets.DOCKERHUB_ORG }}/landing-page:latest
       - name: Login to Rahti registry
-        run: sudo docker login -p ${{ secrets.OPENSHIFT_TOKEN }} -u unused docker-registry.rahti.csc.fi
+        run: sudo docker login -p ${{ secrets.OPENSHIFT_TOKEN }} -u unused image-registry.apps.2.rahti.csc.fi
       - name: Push to Rahti registry
-        run: sudo docker tag ${{ secrets.DOCKERHUB_ORG }}/landing-page:latest docker-registry.rahti.csc.fi/${{ secrets.OPENSHIFT_NAMESPACE }}/landing-page:latest && sudo docker push docker-registry.rahti.csc.fi/${{ secrets.OPENSHIFT_NAMESPACE }}/landing-page
+        run: sudo docker tag ${{ secrets.DOCKERHUB_ORG }}/landing-page:latest image-registry.apps.2.rahti.csc.fi/${{ secrets.OPENSHIFT_NAMESPACE }}/landing-page:latest && sudo docker push image-registry.apps.2.rahti.csc.fi/${{ secrets.OPENSHIFT_NAMESPACE }}/landing-page
       - name: Delete app
         id: destroy-app
         run: oc delete all -l app=landing-page-dev
