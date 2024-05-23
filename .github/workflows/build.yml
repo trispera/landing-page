@@ -1,6 +1,8 @@
 name: Build and Publish app
 
-on: workflow_dispatch
+on:
+ push:
+   branches: dev
 
 jobs:
   build:
